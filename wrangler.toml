@@ -1,6 +1,4 @@
-name               = "mifsut"
+name               = "mifsut-web"   # <— mismo nombre que sube OpenNext
 main               = ".open-next/worker.js"
 compatibility_date = "2025-07-27"
-
-# Activa el runtime Node-style que exige Next.js
 compatibility_flags = ["nodejs_compat"]
