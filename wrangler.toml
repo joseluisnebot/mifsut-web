@@ -1,4 +1,4 @@
-name               = "mifsut"
+name = "mifsut-web"
 main               = ".open-next/worker.js"
 compatibility_date = "2025-07-27"
 
