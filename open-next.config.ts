@@ -1,8 +1,8 @@
 // open-next.config.ts
-import { defineConfig } from "@opennextjs/cloudflare";
+import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
-export default defineConfig({
-  // con la configuración por defecto basta,
-  // pero lo dejamos explícito por claridad
-  outputMode: "workers",
-});
+/**
+ * Config básica.  Si no necesitas nada especial,
+ * basta con llamar a la función sin argumentos.
+ */
+export default defineCloudflareConfig();
