@@ -1,8 +1,10 @@
 // open-next.config.ts
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
-/**
- * Config básica.  Si no necesitas nada especial,
- * basta con llamar a la función sin argumentos.
- */
-export default defineCloudflareConfig();
+export default defineCloudflareConfig({
+  r2: {
+    binding: "ASSETS",            // ← nombre EXACTO del binding en wrangler.toml
+    bucketName: "mifsut-web-assets",
+    previewBucketName: "mifsut-web-assets-preview", // opcional, pero útil
+  },
+});

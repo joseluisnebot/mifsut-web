@@ -1,4 +1,14 @@
-name               = "mifsut-web"   # <— mismo nombre que sube OpenNext
+name               = "mifsut-web"         # mismo nombre que genera OpenNext
 main               = ".open-next/worker.js"
 compatibility_date = "2025-07-27"
 compatibility_flags = ["nodejs_compat"]
+
+# --- R2 buckets -------------------------------------------------------------
+# binding          → cómo se llamará la variable dentro del Worker
+# bucket_name      → bucket “prod” en el panel R2
+# preview_bucket_name → bucket “preview” (opcional, pero recomendable)
+
+[[r2_buckets]]
+binding           = "ASSETS"
+bucket_name       = "mifsut-web-assets"
+preview_bucket_name = "mifsut-web-assets-preview"
