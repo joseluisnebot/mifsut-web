@@ -1,0 +1,11 @@
+# Proyecto de Cloudflare Pages + next-on-pages
+name = "mifsut-web"                          # ← OBLIGATORIO en Pages
+compatibility_date = "2025-07-26"
+compatibility_flags = ["nodejs_compat"]      # ← necesario para next-on-pages
+
+# Directorio que sube Pages (lo genera next-on-pages)
+pages_build_output_dir = ".vercel/output/static"
+
+# Variables (opcionales; también puedes ponerlas en el panel de Pages)
+[vars]
+NODE_ENV = "production"
