@@ -41,23 +41,37 @@ export async function GET(req: Request) {
   const token = data.access_token;
   if (!token) return new Response("No access token", { status: 502 });
 
-  // IMPORTANTE: Decap espera este formato de mensaje
-  const payload = `authorization:github:success:${token}`;
+  // Enviar en ambos formatos y a ambos targets
+  const payloadString = `authorization:github:success:${token}`;
+  const payloadObject = { token };
 
   const html = `
 <!doctype html><html><body>
 <script>
   (function() {
-    function send() {
-      try { (window.opener || window.parent).postMessage(${JSON.stringify(payload)}, "${url.origin}"); } catch (e) {}
+    var payloadString = ${JSON.stringify(payloadString)};
+    var payloadObject = ${JSON.stringify(payloadObject)};
+    var origin = ${JSON.stringify(url.origin)};
+
+    function sendOnce() {
+      try { (window.opener || window.parent).postMessage(payloadString, origin); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(payloadString, "*"); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(payloadObject, origin); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(payloadObject, "*"); } catch(e) {}
     }
-    // varios intentos por si el listener tarda en montarse
-    send();
-    setTimeout(send, 120);
-    setTimeout(send, 300);
-    setTimeout(send, 600);
-    // cerrar el popup
-    setTimeout(function(){ try{ window.close(); }catch(e){} }, 900);
+
+    // Reintentos durante 2s para asegurar que el listener de Decap esté listo
+    sendOnce();
+    setTimeout(sendOnce, 150);
+    setTimeout(sendOnce, 400);
+    setTimeout(sendOnce, 800);
+    setTimeout(sendOnce, 1200);
+    setTimeout(sendOnce, 1800);
+
+    // Como último recurso, volver al panel
+    setTimeout(function() {
+      try { window.location.href = "/admin/index.html#/"; } catch(e) {}
+    }, 2200);
   })();
 </script>
 OK
