@@ -18,6 +18,7 @@ export async function GET(req: Request) {
     return new Response("Missing GitHub OAuth env vars", { status: 500 });
   }
 
+  // Intercambio code -> access_token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -34,42 +35,33 @@ export async function GET(req: Request) {
     }),
   });
 
-  if (!tokenRes.ok) {
-    return new Response("OAuth token exchange failed", { status: 502 });
-  }
+  if (!tokenRes.ok) return new Response("OAuth token exchange failed", { status: 502 });
 
   const data = await tokenRes.json();
   const token = data.access_token;
   if (!token) return new Response("No access token", { status: 502 });
 
+  // IMPORTANTE: Decap espera este formato de mensaje
+  const payload = `authorization:github:success:${token}`;
+
   const html = `
 <!doctype html><html><body>
 <script>
   (function() {
-    var payload = { token: ${JSON.stringify(token)} };
-    console.log("Sending token to Decap:", payload);
-
     function send() {
-      try { 
-        (window.opener || window.parent).postMessage(payload, "${url.origin}"); 
-        console.log("postMessage sent:", payload);
-      } catch (e) {
-        console.error("postMessage error", e);
-      }
+      try { (window.opener || window.parent).postMessage(${JSON.stringify(payload)}, "${url.origin}"); } catch (e) {}
     }
-
+    // varios intentos por si el listener tarda en montarse
     send();
-    setTimeout(send, 150);
-    setTimeout(send, 400);
-
-    // cerrar automáticamente
-    setTimeout(function(){ window.close(); }, 800);
+    setTimeout(send, 120);
+    setTimeout(send, 300);
+    setTimeout(send, 600);
+    // cerrar el popup
+    setTimeout(function(){ try{ window.close(); }catch(e){} }, 900);
   })();
 </script>
 OK
 </body></html>`;
 
-  return new Response(html, {
-    headers: { "Content-Type": "text/html" },
-  });
+  return new Response(html, { headers: { "Content-Type": "text/html" } });
 }
