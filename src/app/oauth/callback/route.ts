@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse("Missing GitHub OAuth env vars", { status: 500 });
   }
 
+  // Intercambiar el code por un access token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
@@ -40,21 +41,30 @@ export async function GET(req: NextRequest) {
   const token = data.access_token;
   if (!token) return new NextResponse("No access token", { status: 502 });
 
+  // HTML que envía el token de vuelta al panel Decap
   const html = `
 <!doctype html><html><body>
 <script>
   (function() {
+    var payload = { token: ${JSON.stringify(token)} };
+
     function send() {
-      (window.opener || window.parent).postMessage(
-        { token: ${JSON.stringify(token)} },
-        "${req.nextUrl.origin}"
-      );
-      window.close();
+      try { (window.opener || window.parent).postMessage(payload, "*"); } catch (e) {}
+      try { window.close(); } catch (e) {}
     }
-    send(); setTimeout(send, 75); setTimeout(send, 150);
+
+    // Varios intentos para asegurar entrega
+    send();
+    setTimeout(send, 75);
+    setTimeout(send, 150);
+    setTimeout(send, 300);
+
+    // Último recurso: redirigir al panel
+    setTimeout(function(){ window.location.href = "/admin/index.html#/"; }, 600);
   })();
 </script>
 OK
 </body></html>`;
+
   return new NextResponse(html, { headers: { "Content-Type": "text/html" } });
 }
