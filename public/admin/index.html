@@ -5,14 +5,45 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>MIFSUT – Admin</title>
 
-    <!-- Fuerza la ruta del config -->
+    <!-- Fuerza ruta del config -->
     <script>window.CMS_CONFIG_PATH = "/admin/config.yml";</script>
+
+    <!-- SHIM: Captura tokens que vengan del callback y autentica Decap -->
+    <script>
+      (function () {
+        function handleMessage(ev) {
+          try {
+            var data = ev.data;
+            var token = null;
+
+            // Formato string oficial de Decap: "authorization:github:success:<TOKEN>"
+            if (typeof data === "string" && data.startsWith("authorization:github:success:")) {
+              token = data.split(":").pop();
+            }
+            // Formato objeto { token: "..." } por si llega así
+            else if (data && typeof data === "object" && "token" in data) {
+              token = data.token;
+            }
+
+            if (token) {
+              // Decap lee este storage para saber que ya estás logueado
+              var user = { token: token, provider: "github" };
+              localStorage.setItem("netlify-cms-user", JSON.stringify(user));
+              // Recarga para que el panel arranque autenticado
+              location.replace("/admin/index.html#/");
+            }
+          } catch (e) {
+            /* noop */
+          }
+        }
+        window.addEventListener("message", handleMessage, false);
+      })();
+    </script>
 
     <!-- Carga Decap CMS -->
     <script src="https://unpkg.com/decap-cms@3.3.0/dist/decap-cms.js" defer></script>
 
     <style>
-      /* Solo para que no se vea “todo blanco” mientras carga */
       html,body{height:100%;margin:0;background:#0b0f14;color:#e6edf3;}
       #boot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.7}
     </style>

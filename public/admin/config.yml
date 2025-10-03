@@ -1,53 +1,32 @@
 backend:
   name: github
-  repo: joseluisnebot/mifsut-web   # <-- tu repo
+  repo: joseluisnebot/mifsut-web
   branch: main
-  base_url: https://mifsut.com      # 👈 tu dominio real en producción
+  base_url: https://mifsut.com
   auth_endpoint: /oauth/auth
-
-site_url: https://mifsut.com
-display_url: https://mifsut.com
-logo_url: /icon.svg
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
-
 locale: "es"
 
 collections:
-  - name: "posts"
-    label: "Artículos"
+  - name: posts
+    label: Artículos
     folder: "content/posts"
-    extension: "md"
     create: true
+    extension: "md"
     slug: "{{slug}}"
-    preview_path: "blog/{{slug}}"
-    editor: { preview: false }
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", required: false }
-      - { label: "Resumen", name: "excerpt", widget: "text", required: false }
-      - { label: "Imagen de portada", name: "cover", widget: "image", required: false }
-      - { label: "Fecha de publicación", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ" }
-      - { label: "Categorías", name: "categories", widget: "list", required: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Fecha", name: "publishedAt", widget: "datetime" }
       - { label: "Contenido", name: "body", widget: "markdown" }
 
-  - name: "blueprints"
-    label: "Blueprints"
+  - name: blueprints
+    label: Blueprints
     folder: "content/blueprints"
-    extension: "md"
     create: true
+    extension: "md"
     slug: "{{slug}}"
-    preview_path: "blueprints/{{slug}}"
-    editor: { preview: false }
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", required: false }
-      - { label: "Resumen", name: "summary", widget: "text", required: false }
-      - { label: "Imagen de portada", name: "cover", widget: "image", required: false }
-      - { label: "URL de descarga (GitHub Release)", name: "downloadUrl", widget: "string", required: false }
-      - { label: "Precio (€)", name: "price", widget: "number", value_type: "float", required: false }
-      - { label: "Características", name: "features", widget: "list", required: false }
-      - { label: "Fecha de publicación", name: "publishedAt", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ssZ", required: false }
-      - { label: "Descripción", name: "body", widget: "markdown", required: false }
+      - { label: "Descripción", name: "body", widget: "markdown" }
