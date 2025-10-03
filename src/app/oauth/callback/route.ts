@@ -51,24 +51,19 @@ export async function GET(req: Request) {
 
     function send() {
       try { 
-        (window.opener || window.parent).postMessage(payload, "*"); 
+        (window.opener || window.parent).postMessage(payload, "${url.origin}"); 
         console.log("postMessage sent:", payload);
       } catch (e) {
         console.error("postMessage error", e);
       }
     }
 
-    // intentos múltiples por si acaso
     send();
-    setTimeout(send, 100);
-    setTimeout(send, 300);
-    setTimeout(send, 600);
+    setTimeout(send, 150);
+    setTimeout(send, 400);
 
-    // redirigir al admin después de 1s
-    setTimeout(function(){ 
-      console.log("Redirecting to admin...");
-      window.location.href = "/admin/index.html#/";
-    }, 1000);
+    // cerrar automáticamente
+    setTimeout(function(){ window.close(); }, 800);
   })();
 </script>
 OK
