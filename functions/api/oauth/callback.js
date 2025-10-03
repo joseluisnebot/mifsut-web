@@ -1,10 +1,11 @@
-export const onRequestGet: PagesFunction = async ({ env, request }) => {
+export const onRequestGet = async ({ env, request }) => {
   const origin = new URL(request.url).origin;
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   const cookie = request.headers.get("cookie") || "";
-  const stateCookie = /oauth_state=([^;]+)/.exec(cookie)?.[1];
+  const stateCookieMatch = /oauth_state=([^;]+)/.exec(cookie);
+  const stateCookie = stateCookieMatch ? stateCookieMatch[1] : null;
 
   if (!code || !state || !stateCookie || state !== stateCookie) {
     return new Response("Invalid OAuth state", { status: 400 });
@@ -16,7 +17,7 @@ export const onRequestGet: PagesFunction = async ({ env, request }) => {
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
       "User-Agent": "mifsut-oauth"
     },
@@ -29,17 +30,12 @@ export const onRequestGet: PagesFunction = async ({ env, request }) => {
     })
   });
 
-  if (!tokenRes.ok) {
-    return new Response("OAuth token exchange failed", { status: 502 });
-  }
+  if (!tokenRes.ok) return new Response("OAuth token exchange failed", { status: 502 });
 
   const data = await tokenRes.json();
   const token = data.access_token;
-  if (!token) {
-    return new Response("No access token", { status: 502 });
-  }
+  if (!token) return new Response("No access token", { status: 502 });
 
-  // Devuelve el token a la ventana de Decap
   const html = `
 <!doctype html><html><body>
 <script>
@@ -58,3 +54,4 @@ OK
 </body></html>`;
   return new Response(html, { headers: { "Content-Type": "text/html" } });
 };
+
