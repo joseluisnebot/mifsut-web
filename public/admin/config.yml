@@ -1,9 +1,9 @@
-local_backend: true
-
 backend:
   name: github
-  repo: joseluisnebot/mifsut-web
+  repo: joseluisnebot/mifsut-web   # <-- tu repo
   branch: main
+  base_url: /api/oauth             # usa nuestras functions
+  auth_endpoint: auth
 
 site_url: https://mifsut.com
 display_url: https://mifsut.com
