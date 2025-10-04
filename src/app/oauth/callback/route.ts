@@ -41,37 +41,47 @@ export async function GET(req: Request) {
   const token = data.access_token;
   if (!token) return new Response("No access token", { status: 502 });
 
-  // Enviar en ambos formatos y a ambos targets
-  const payloadString = `authorization:github:success:${token}`;
-  const payloadObject = { token };
+  // 1) Formato string que espera Decap
+  const msgString = `authorization:github:success:${token}`;
+  // 2) Objeto alternativo
+  const msgObject = { token };
+
+  // 3) URL del admin con token en el hash (fallback reconocido por varias versiones)
+  const adminHash = `#/` + encodeURIComponent(msgString); // quedará /admin/index.html#/%3Cmsg%3E
+  const adminURL = `/admin/index.html${adminHash}`;
 
   const html = `
 <!doctype html><html><body>
 <script>
   (function() {
-    var payloadString = ${JSON.stringify(payloadString)};
-    var payloadObject = ${JSON.stringify(payloadObject)};
     var origin = ${JSON.stringify(url.origin)};
+    var msgString = ${JSON.stringify(msgString)};
+    var msgObject = ${JSON.stringify(msgObject)};
+    var adminURL = ${JSON.stringify(adminURL)};
 
     function sendOnce() {
-      try { (window.opener || window.parent).postMessage(payloadString, origin); } catch(e) {}
-      try { (window.opener || window.parent).postMessage(payloadString, "*"); } catch(e) {}
-      try { (window.opener || window.parent).postMessage(payloadObject, origin); } catch(e) {}
-      try { (window.opener || window.parent).postMessage(payloadObject, "*"); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(msgString, origin); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(msgString, "*"); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(msgObject, origin); } catch(e) {}
+      try { (window.opener || window.parent).postMessage(msgObject, "*"); } catch(e) {}
     }
 
-    // Reintentos durante 2s para asegurar que el listener de Decap esté listo
+    // Enviamos varias veces por si el listener tarda
     sendOnce();
     setTimeout(sendOnce, 150);
     setTimeout(sendOnce, 400);
     setTimeout(sendOnce, 800);
     setTimeout(sendOnce, 1200);
-    setTimeout(sendOnce, 1800);
 
-    // Como último recurso, volver al panel
+    // Fallback robusto: llevar el token en el hash al admin
+    // Varias versiones del CMS leen ese hash y completan el login.
     setTimeout(function() {
-      try { window.location.href = "/admin/index.html#/"; } catch(e) {}
-    }, 2200);
+      try { (window.opener || window.parent).location.href = adminURL; } catch(e) {}
+      try { window.location.href = adminURL; } catch(e) {}
+    }, 1500);
+
+    // Cerrar el popup después
+    setTimeout(function(){ try{ window.close(); }catch(e){} }, 2200);
   })();
 </script>
 OK
