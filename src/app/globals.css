@@ -1,6 +1,36 @@
-/* src/app/globals.css */
 @import "tailwindcss";
 
-/* Ajustes mínimos globales */
-:root { color-scheme: dark; }
-html, body { height: 100%; }
+:root {
+  color-scheme: dark;
+  --accent: #6366f1;
+  --accent-2: #8b5cf6;
+  --surface: #0f0f12;
+  --surface-2: #16161c;
+  --border: rgba(255,255,255,0.07);
+}
+
+html, body { height: 100%; scroll-behavior: smooth; }
+
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #a78bfa, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+              linear-gradient(135deg, #6366f1, #a78bfa) border-box;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
