@@ -31,9 +31,6 @@ VM_HOST = "192.168.1.150"
 VM_KEY = "/root/.ssh/tresycuarto_vm"
 VM_REPO = "~/mifsut-web"
 
-CF_TOKEN = "lEduOPo2NZzDKY7gyEMjkMJkZHf1MFKBg6T_5aau"
-CF_ACCOUNT = "0c4d9c91bb0f3a4c905545ecc158ec65"
-
 REQUIRED_FIELDS = ["slug", "title", "summary", "category", "tags"]
 
 # ---------------------------------------------------------------------------
@@ -277,11 +274,15 @@ def git_commit_push(slug: str) -> None:
 
 
 def deploy_vm() -> None:
+    cf_token = os.environ.get("CLOUDFLARE_API_TOKEN", "")
+    cf_account = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "")
+    if not cf_token or not cf_account:
+        sys.exit("ERROR: define CLOUDFLARE_API_TOKEN y CLOUDFLARE_ACCOUNT_ID antes de ejecutar")
     cmd = (
         f"ssh -i {VM_KEY} -o StrictHostKeyChecking=no {VM_USER}@{VM_HOST} "
         f"'cd {VM_REPO} && git pull && "
-        f"export CLOUDFLARE_API_TOKEN={CF_TOKEN} && "
-        f"export CLOUDFLARE_ACCOUNT_ID={CF_ACCOUNT} && "
+        f"export CLOUDFLARE_API_TOKEN={cf_token} && "
+        f"export CLOUDFLARE_ACCOUNT_ID={cf_account} && "
         f"npm run deploy'"
     )
     print("→ Desplegando en Cloudflare Pages via VM...")
