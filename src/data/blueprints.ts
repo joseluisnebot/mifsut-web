@@ -9,6 +9,14 @@ export type Blueprint = {
 
 export const blueprints: Blueprint[] = [
   {
+    slug: "tresycuarto",
+    title: "tresycuarto.com — Plataforma de ocio con agentes IA",
+    summary: "Plataforma de tardeo en España gestionada por agentes IA: scraping semanal de eventos en 12 portales turísticos, generación automática de vídeos TikTok/Reels y newsletter. Coste operativo cero.",
+    href: "/blueprints/tresycuarto",
+    tags: ["Next.js", "Cloudflare", "Python", "Ollama", "IA"],
+    category: "Proyectos",
+  },
+  {
     slug: "cvss-ubuntu-telegram",
     title: "CVSS Ubuntu → Telegram",
     summary: "Monitoriza avisos de seguridad de Ubuntu y notifícalos en Telegram filtrando por CVSS. Detección de vulnerabilidades críticas en tiempo real.",

@@ -1,0 +1,40 @@
+{
+  "_comment": "Plantilla para crear un nuevo blueprint. Copiar, rellenar y ejecutar: python3 scripts/add_blueprint.py blueprints/mi-blueprint.json",
+
+  "slug": "mi-blueprint",
+  "title": "Título del Blueprint",
+  "summary": "Descripción corta que aparece en la card del catálogo (máx. 180 caracteres).",
+  "description_meta": "Meta description para SEO (máx. 160 caracteres).",
+  "category": "IA",
+  "tags": ["Python", "n8n", "Cloudflare"],
+
+  "description": "Descripción larga del blueprint. Qué problema resuelve, cómo funciona y qué valor aporta.",
+
+  "link_live": "https://ejemplo.com",
+  "link_github": "https://github.com/joseluisnebot/repo",
+
+  "metrics": [
+    { "label": "Tiempo de setup", "value": "< 1h" },
+    { "label": "Coste mensual", "value": "0 €" }
+  ],
+
+  "agents": [
+    {
+      "name": "agente.py",
+      "desc": "Descripción de lo que hace este agente.",
+      "model": "mistral:7b",
+      "cron": "Lunes 04:00h"
+    }
+  ],
+
+  "stack": [
+    { "name": "Python 3", "role": "Lógica principal" },
+    { "name": "n8n", "role": "Orquestación" }
+  ],
+
+  "pipeline": [
+    "Primer paso del pipeline",
+    "Segundo paso",
+    "Tercer paso"
+  ]
+}

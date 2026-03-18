@@ -9,9 +9,10 @@ export const metadata: Metadata = {
   description: "Catálogo de workflows de n8n, scripts Python y agentes IA para automatizar seguridad, datos, marketing e infraestructura. Descarga e instala en minutos.",
 };
 
-const CATEGORIES = ["Todos", "Seguridad", "Data", "Marketing", "IA", "Infraestructura"];
+const CATEGORIES = ["Todos", "Proyectos", "Seguridad", "Data", "Marketing", "IA", "Infraestructura"];
 
 const CATEGORY_COLORS: Record<string, string> = {
+  "Proyectos": "text-amber-400 bg-amber-500/10 border-amber-500/20",
   "Seguridad": "text-red-400 bg-red-500/10 border-red-500/20",
   "Data": "text-blue-400 bg-blue-500/10 border-blue-500/20",
   "Marketing": "text-green-400 bg-green-500/10 border-green-500/20",
