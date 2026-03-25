@@ -6,7 +6,7 @@ export const runtime = "edge";
 export const metadata: Metadata = {
   title: "tresycuarto.com — Plataforma de ocio con agentes IA | MIFSUT",
   description:
-    "Caso de uso real: plataforma de tardeo en España gestionada por agentes IA. Scraping semanal de eventos, generación automática de vídeos TikTok/Reels y newsletter. Stack: Next.js 15 + Cloudflare + Python + Ollama.",
+    "Caso de uso real: plataforma de tardeo en España gestionada por agentes IA. 63 ciudades, 10.000+ locales, Reels automáticos, newsletter diaria personalizada. Stack: Next.js 15 + Cloudflare + Python + Google Places + edge-tts.",
 };
 
 const STACK = [
@@ -14,51 +14,70 @@ const STACK = [
   { name: "Cloudflare Pages", role: "Hosting (coste cero)" },
   { name: "Cloudflare D1", role: "Base de datos SQLite edge" },
   { name: "Cloudflare R2", role: "Almacenamiento de media" },
-  { name: "Python 3 + Pillow + ffmpeg", role: "Generación de vídeos TikTok" },
-  { name: "BeautifulSoup + requests", role: "Scraping de portales turísticos" },
-  { name: "Ollama (local)", role: "Inferencia IA sin coste de API" },
-  { name: "qwen2.5-coder:7b", role: "Extracción estructurada de eventos (JSON)" },
-  { name: "mistral:7b", role: "Generación de descripciones y hashtags" },
-  { name: "nomic-embed-text", role: "Embeddings para deduplicación semántica" },
-  { name: "Listmonk", role: "Email marketing autohospedado" },
-  { name: "n8n", role: "Orquestación de flujos y crons" },
+  { name: "Google Places API (New)", role: "Fotos, ratings, horarios y precio de locales" },
+  { name: "OpenStreetMap (Overpass API)", role: "Base de locales: bares, cafés, terrazas" },
+  { name: "Python 3 + Pillow + ffmpeg", role: "Generación de vídeos Reels 1080×1920" },
+  { name: "edge-tts (Microsoft Neural)", role: "Voz en off para vídeos (es-ES-XimenaNeural)" },
+  { name: "Ollama (local) + llama3.2:3b", role: "Validación y filtrado de contenido sin coste" },
+  { name: "Brevo", role: "Email transaccional (newsletter diaria)" },
+  { name: "Listmonk", role: "Gestión de suscriptores autohospedada" },
+  { name: "Instagram Graph API", role: "Publicación automática de Reels" },
 ];
 
 const AGENTS = [
   {
     name: "scraper_eventos.py",
-    desc: "Extrae eventos de 12 portales turísticos oficiales cada lunes a las 04:17h. Geocodifica con Nominatim (OSM), deduplica semánticamente con cosine similarity ≥ 0.92 y enriquece descripciones vacías.",
-    model: "qwen2.5-coder:7b + mistral:7b + nomic-embed-text",
-    cron: "Lunes 04:17h",
+    desc: "Extrae eventos de portales turísticos oficiales españoles 2 veces al día. Geocodifica coordenadas con Nominatim (OSM) y almacena en D1.",
+    model: "Nominatim OSM (geocoding)",
+    cron: "03:00 y 15:00 diario",
   },
   {
-    name: "tiktok_generator.py",
-    desc: "Genera vídeos MP4 1080×1920 (formato Reels/TikTok) para cada evento relevante. Incluye mapa OSM, paleta de color según tipo de evento, música royalty-free y hashtags generados por IA.",
-    model: "mistral:7b (hashtags)",
-    cron: "Manual / bajo demanda",
+    name: "enriquecer_ratings.py",
+    desc: "Enriquece cada local con Google Places API: foto real, rating, nº reseñas, nivel de precios y horario. Procesa hasta 500 locales/día (dentro del crédito gratuito de $200/mes). Prioriza ciudades de Semana Santa.",
+    model: "Google Places API (New)",
+    cron: "04:00 diario",
   },
   {
-    name: "preview_newsletter.py",
-    desc: "Genera una previsualización HTML de la newsletter semanal con los mejores eventos de cada ciudad. Mejora automáticamente las descripciones cortas antes del envío.",
-    model: "mistral:7b (descripciones)",
-    cron: "Previo al envío semanal",
+    name: "generar_reels_eventos.py",
+    desc: "Genera Reels de eventos próximos en formato 1080×1920. Narra el evento con voz neural, localiza los 5 bares más cercanos con fotos reales y fondo de color aleatorio. Sube a R2 y encola en Instagram automáticamente.",
+    model: "edge-tts XimenaNeural + Google Places (fotos)",
+    cron: "13:30 diario",
+  },
+  {
+    name: "generar_reels_evergreen.py",
+    desc: "Genera Reels 'Top 5 X en Ciudad' (bares, cafés, terrazas) con fotos reales de Google Places y voz neural. Sube a Cloudflare R2 y encola para publicación en Instagram.",
+    model: "edge-tts XimenaNeural + Google Places (fotos)",
+    cron: "Bajo demanda / semanal",
+  },
+  {
+    name: "instagram_publisher.py",
+    desc: "Publica Reels en @somos.tresycuarto vía Instagram Graph API. Lee una cola dinámica (eventos y evergreens) más una cola estática de Semana Santa. Máximo 2 publicaciones/día.",
+    model: "Instagram Graph API v19",
+    cron: "10:00 y 18:00 diario",
+  },
+  {
+    name: "enviar_newsletter.py",
+    desc: "Envía un email diario personalizado a cada suscriptor con hasta 5 eventos de sus ciudades. Solo envía cuando hay eventos programados para ese día. Diseño responsive en paleta crema tresycuarto.",
+    model: "Brevo REST API",
+    cron: "15:15 diario",
   },
 ];
 
 const METRICS = [
-  { label: "Portales scrapeados", value: "12" },
-  { label: "Eventos en DB (primer run)", value: "903" },
-  { label: "Ciudades cubiertas", value: "20+" },
+  { label: "Locales en base de datos", value: "10.000+" },
+  { label: "Ciudades cubiertas", value: "63" },
   { label: "Vídeos Semana Santa 2026", value: "22" },
+  { label: "Reels publicados (Instagram)", value: "14+" },
   { label: "Coste infraestructura / mes", value: "~0 €" },
   { label: "Horas de gestión manual", value: "0" },
 ];
 
 const SOURCES = [
   "andalucia.org", "agendaunica.cordoba.es", "jerez.es",
-  "turismocastillayleon.com", "salamanca.es", "turismoregiondemurcia.es",
-  "turismocastillalamancha.es", "toledo.es", "comunitatvalenciana.com",
-  "visitvalencia.com", "datos.madrid.es (JSON API)", "spain.info",
+  "turismocastillayleon.com", "turismoregiondemurcia.es",
+  "comunitatvalenciana.com", "visitvalencia.com",
+  "datos.madrid.es (JSON API)", "spain.info",
+  "OpenStreetMap Overpass API", "Google Places API",
 ];
 
 export default function TresyCuartoPage() {
@@ -71,14 +90,16 @@ export default function TresyCuartoPage() {
           <span className="text-xs px-2.5 py-1 rounded-full border font-medium text-amber-400 bg-amber-500/10 border-amber-500/20">
             Proyecto
           </span>
-          <span className="text-xs text-neutral-500">Caso de uso real</span>
+          <span className="text-xs text-neutral-500">Caso de uso real · En producción</span>
         </div>
         <h1 className="text-3xl font-bold tracking-tight gradient-text mb-3">
           tresycuarto.com
         </h1>
         <p className="text-neutral-400 leading-relaxed">
           Plataforma de tardeo y ocio de media tarde en España. Gestionada íntegramente por
-          agentes IA: sin redacción manual, sin gestión de contenido, con coste operativo cero.
+          agentes IA: sin redacción manual, sin community manager, con coste operativo cero.
+          63 ciudades, 10.000+ locales enriquecidos con Google Places y Reels publicados
+          automáticamente cada día en Instagram.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Link
@@ -94,6 +115,13 @@ export default function TresyCuartoPage() {
             className="rounded-xl px-4 py-2 text-sm font-semibold border border-white/10 hover:border-indigo-500/30 transition"
           >
             Código fuente
+          </Link>
+          <Link
+            href="https://instagram.com/somos.tresycuarto"
+            target="_blank"
+            className="rounded-xl px-4 py-2 text-sm font-semibold border border-white/10 hover:border-indigo-500/30 transition"
+          >
+            @somos.tresycuarto
           </Link>
         </div>
       </header>
@@ -119,9 +147,9 @@ export default function TresyCuartoPage() {
           sin editores, sin community managers, sin agencias de contenido.
         </p>
         <p className="text-neutral-400 leading-relaxed">
-          La solución: una cadena de agentes IA que descubren eventos, los enriquecen,
-          generan contenido audiovisual y gestionan la comunicación con la audiencia —
-          todo de forma autónoma, corriendo en infraestructura propia.
+          La solución: una cadena de agentes IA que descubren eventos, enriquecen locales con
+          datos reales de Google, generan contenido audiovisual con voz neural y gestionan
+          la comunicación con la audiencia — todo de forma autónoma, corriendo en infraestructura propia.
         </p>
       </section>
 
@@ -136,7 +164,7 @@ export default function TresyCuartoPage() {
                 <span className="text-xs text-neutral-600 shrink-0">{a.cron}</span>
               </div>
               <p className="text-sm text-neutral-400 leading-relaxed mb-1">{a.desc}</p>
-              <p className="text-xs text-neutral-600">Modelo: {a.model}</p>
+              <p className="text-xs text-neutral-600">Tecnología: {a.model}</p>
             </div>
           ))}
         </div>
@@ -176,15 +204,14 @@ export default function TresyCuartoPage() {
         <h2 className="text-xl font-semibold mb-4">Pipeline de automatización</h2>
         <ol className="space-y-3">
           {[
-            "Cron lunes 04:17h → scraper arranca y visita 12 portales turísticos",
-            "Ollama (qwen2.5-coder:7b) extrae eventos estructurados como JSON desde HTML",
-            "Nominatim geocodifica cada evento (lat/lon gratis, sin API key)",
-            "nomic-embed-text genera embeddings → cosine similarity elimina duplicados",
-            "mistral:7b enriquece descripciones vacías o demasiado cortas",
-            "Eventos insertados en Cloudflare D1 vía REST API",
-            "tiktok_generator.py genera vídeo MP4 por evento: mapa OSM + música + hashtags IA",
-            "preview_newsletter.py genera HTML para revisión antes del envío",
-            "Listmonk envía la newsletter semanal a suscriptores",
+            "Scraper visita portales turísticos oficiales 2x/día → eventos insertados en Cloudflare D1",
+            "Geocodificador Nominatim (OSM) asigna coordenadas lat/lon a cada evento",
+            "Ollama (llama3.2:3b, local) valida y filtra descripciones de baja calidad sin coste de API",
+            "Enriquecedor Google Places obtiene foto real, rating, precio y horario de 500 locales/día",
+            "Generador de Reels crea vídeo 1080×1920 con voz neural, fotos reales y paleta aleatoria",
+            "Vídeo sube a Cloudflare R2 y se encola automáticamente en instagram_queue.json",
+            "Publisher publica 2 Reels/día en @somos.tresycuarto vía Instagram Graph API",
+            "Newsletter diaria a las 15:15 envía hasta 5 eventos personalizados por ciudad a cada suscriptor",
           ].map((step, i) => (
             <li key={i} className="flex gap-3 text-sm text-neutral-400">
               <span className="shrink-0 w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 text-xs flex items-center justify-center font-bold">
