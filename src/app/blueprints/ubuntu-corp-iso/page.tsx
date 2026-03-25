@@ -132,12 +132,7 @@ export default function UbuntuCorpIsoPage() {
           Puedo adaptar la ISO a las necesidades específicas de tu organización: naming,
           usuarios, software preinstalado, configuración de red corporativa y agente de gestión.
         </p>
-        <a
-          href="mailto:hola@mifsut.com"
-          className="inline-block rounded-xl px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition"
-        >
-          Hablemos →
-        </a>
+        <p className="text-sm font-semibold text-indigo-300">hola@mifsut.com</p>
       </section>
 
     </main>

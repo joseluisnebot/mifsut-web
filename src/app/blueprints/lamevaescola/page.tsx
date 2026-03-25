@@ -114,12 +114,7 @@ export default function LaMevaEscolaPage() {
         <p className="text-neutral-400 text-sm mb-4">
           Si quieres construir herramientas similares para tu centro o plataforma, hablemos.
         </p>
-        <a
-          href="mailto:hola@mifsut.com"
-          className="inline-block rounded-xl px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition"
-        >
-          Hablemos →
-        </a>
+        <p className="text-sm font-semibold text-indigo-300">hola@mifsut.com</p>
       </section>
 
     </main>

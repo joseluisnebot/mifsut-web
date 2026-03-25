@@ -82,12 +82,7 @@ export default function Blueprints() {
           <h3 className="text-xl font-semibold mb-1">¿Necesitas uno a medida?</h3>
           <p className="text-neutral-500 text-sm">Te diseñamos el blueprint exacto para tu proceso. Entregamos en días.</p>
         </div>
-        <a
-          href="mailto:ventas@mifsut.com"
-          className="shrink-0 rounded-xl px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition"
-        >
-          Solicitar blueprint →
-        </a>
+        <p className="shrink-0 text-sm font-semibold text-indigo-300">hola@mifsut.com</p>
       </div>
     </main>
   );

@@ -77,12 +77,7 @@ export default function SobreMi() {
         <p className="text-neutral-400 text-sm mb-4">
           Si tienes un proyecto interesante o quieres colaborar en algo, escríbeme.
         </p>
-        <a
-          href="mailto:hola@mifsut.com"
-          className="inline-block rounded-xl px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition"
-        >
-          hola@mifsut.com →
-        </a>
+        <p className="text-sm font-semibold text-indigo-300">hola@mifsut.com</p>
       </section>
 
     </main>

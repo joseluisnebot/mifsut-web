@@ -97,12 +97,7 @@ export default function ElMeuInstitutPage() {
         <p className="text-neutral-400 text-sm mb-4">
           Puedo adaptar la plataforma a las necesidades específicas de tu instituto o red de centros.
         </p>
-        <a
-          href="mailto:hola@mifsut.com"
-          className="inline-block rounded-xl px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition"
-        >
-          Hablemos →
-        </a>
+        <p className="text-sm font-semibold text-indigo-300">hola@mifsut.com</p>
       </section>
 
     </main>

@@ -229,12 +229,7 @@ export default function TresyCuartoPage() {
           Diseñamos y desplegamos tu plataforma de contenido automatizada: desde el scraping
           de datos hasta la publicación en redes sociales, sin intervención manual.
         </p>
-        <a
-          href="mailto:ventas@mifsut.com"
-          className="inline-block rounded-xl px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition"
-        >
-          Hablemos →
-        </a>
+        <p className="text-sm font-semibold text-indigo-300">hola@mifsut.com</p>
       </section>
 
     </main>
