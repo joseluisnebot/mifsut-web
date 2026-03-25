@@ -58,7 +58,7 @@ export default function RiegoControllerPage() {
           Controlador de riego FERTICONTROL
         </h1>
         <p className="text-neutral-400 leading-relaxed">
-          Sistema de fertirrigación industrial con pantalla táctil 7". 30 programas independientes,
+          Sistema de fertirrigación industrial con pantalla táctil 7&quot;. 30 programas independientes,
           8 zonas de riego controladas por RS-485 Modbus, fases automáticas de pre-riego /
           abono / post-riego y sistema de seguridad con watchdog y E-STOP.
         </p>

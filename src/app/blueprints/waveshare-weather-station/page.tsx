@@ -5,7 +5,7 @@ export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Estación meteorológica Waveshare — ESP32-S3 + LVGL | MIFSUT",
-  description: "Estación meteorológica con ESP32-S3, pantalla táctil 7\", sensor DHT11 interior y datos exteriores de Open-Meteo API. UI con LVGL, OTA y WiFi. Funcionando en Vinaròs.",
+  description: "Estación meteorológica con ESP32-S3, pantalla táctil 7 pulgadas, sensor DHT11 interior y datos exteriores de Open-Meteo API. UI con LVGL, OTA y WiFi. Funcionando en Vinaròs.",
 };
 
 const HARDWARE = [
@@ -47,7 +47,7 @@ export default function WaveshareWeatherPage() {
           Estación meteorológica Waveshare
         </h1>
         <p className="text-neutral-400 leading-relaxed">
-          Estación meteorológica con pantalla táctil 7" en ESP32-S3. Sensor DHT11 para
+          Estación meteorológica con pantalla táctil 7&quot; en ESP32-S3. Sensor DHT11 para
           temperatura y humedad interior, datos de previsión exterior de Open-Meteo API
           y actualización de firmware OTA por WiFi.
         </p>
