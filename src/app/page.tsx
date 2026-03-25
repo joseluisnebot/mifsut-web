@@ -1,215 +1,128 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AIStatusInline from "@/components/AIStatusInLine";
+import { blueprints } from "@/data/blueprints";
 
 export const runtime = "edge";
 
 export const metadata: Metadata = {
-  title: "MIFSUT — Automatización empresarial con IA",
-  description: "Blueprints de n8n, agentes IA y infraestructura Cloudflare para automatizar operaciones de empresa. Reduce costes operativos y escala sin contratar.",
+  title: "MIFSUT — Proyectos de IA, automatización e IoT",
+  description: "Portfolio de Jose Luis Nebot: plataformas web con IA, sistemas IoT con ESP32, automatización con Python y Cloudflare. Proyectos reales en producción.",
 };
 
-const METRICS = [
-  { value: "50+", label: "Blueprints publicados" },
-  { value: "99.9%", label: "Uptime en edge global" },
-  { value: "10×", label: "Reducción de tiempo operativo" },
-  { value: "0→1", label: "De idea a producción en días" },
+const STACK = [
+  { icon: "🐍", label: "Python" },
+  { icon: "▲", label: "Next.js" },
+  { icon: "☁️", label: "Cloudflare" },
+  { icon: "🤖", label: "LLMs / Ollama" },
+  { icon: "📡", label: "ESP32 / LVGL" },
+  { icon: "🗄️", label: "Modbus RS-485" },
+  { icon: "📷", label: "Google Places API" },
+  { icon: "📧", label: "Brevo / Listmonk" },
 ];
 
-const SERVICES = [
-  {
-    icon: "⚡",
-    title: "Blueprints de automatización",
-    desc: "Workflows de n8n listos para instalar. Seguridad, notificaciones, scrapers, integraciones IA. Descarga e implanta en minutos.",
-  },
-  {
-    icon: "🤖",
-    title: "Agentes IA personalizados",
-    desc: "Agentes que monitorizan, enriquecen datos, generan contenido y toman decisiones. Construidos sobre LLMs de última generación.",
-  },
-  {
-    icon: "☁️",
-    title: "Infraestructura Cloudflare",
-    desc: "Workers, Pages, D1, R2. Stack serverless sin gestión de servidores. Deploy global en segundos desde tu repositorio.",
-  },
-  {
-    icon: "🔒",
-    title: "Seguridad y monitorización",
-    desc: "SIEM con Wazuh, alertas CVSS, Zero Trust con Cloudflare Access. Seguridad empresarial sin equipo de seguridad dedicado.",
-  },
-  {
-    icon: "📊",
-    title: "Data pipelines",
-    desc: "Extracción, enriquecimiento y carga de datos desde APIs, webs y sensores. Pipelines que se ejecutan solos.",
-  },
-  {
-    icon: "🚀",
-    title: "Consultoría de implantación",
-    desc: "Te acompañamos desde el diseño hasta producción. Entregamos resultados medibles, no PowerPoints.",
-  },
-];
+const CATEGORY_ORDER = ["IA + Web", "Web", "Hardware / IoT", "Infraestructura"];
 
-const USECASES = [
-  { sector: "Seguridad TI", case: "Alertas de vulnerabilidades críticas en Telegram antes de que llegue el informe semanal." },
-  { sector: "E-commerce", case: "Pipeline de enriquecimiento de catálogo con descripciones IA y categorización automática." },
-  { sector: "Inmobiliario", case: "Scraper + agente que extrae, enriquece y publica fichas de locales con fotos e info de contacto." },
-  { sector: "Marketing", case: "Automatización de campañas email con segmentación IA y envío en el momento óptimo." },
-];
+function groupByCategory(items: typeof blueprints) {
+  const map: Record<string, typeof blueprints> = {};
+  for (const bp of items) {
+    if (!map[bp.category]) map[bp.category] = [];
+    map[bp.category].push(bp);
+  }
+  return CATEGORY_ORDER.map((cat) => ({ cat, items: map[cat] ?? [] })).filter((g) => g.items.length > 0);
+}
 
 export default function Home() {
+  const groups = groupByCategory(blueprints);
+
   return (
     <main className="relative overflow-hidden">
-      {/* Glow de fondo */}
       <div className="hero-glow" />
 
       {/* HERO */}
-      <section className="relative mx-auto max-w-6xl px-6 pt-24 pb-20 text-center">
+      <section className="relative mx-auto max-w-4xl px-6 pt-24 pb-16">
         <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs text-indigo-300 mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-          Plataforma de automatización empresarial con IA
+          Proyectos en producción
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6">
-          Automatiza tu empresa.<br />
-          <span className="gradient-text">Escala con IA.</span>
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.08] mb-5">
+          Construyendo con IA,<br />
+          <span className="gradient-text">hardware y código.</span>
         </h1>
 
-        <p className="mx-auto max-w-2xl text-lg md:text-xl text-neutral-400 mb-10 leading-relaxed">
-          Blueprints de n8n, agentes inteligentes e infraestructura cloud que reducen
-          tu carga operativa un 90% sin aumentar el equipo.
+        <p className="max-w-2xl text-lg text-neutral-400 mb-8 leading-relaxed">
+          Soy Jose Luis Nebot. Diseño y despliego plataformas web, agentes de automatización
+          y sistemas embebidos con pantalla táctil. Todo funcionando en producción, con coste
+          mínimo y sin gestión manual.
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="mailto:ventas@mifsut.com"
-            className="rounded-xl px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base transition shadow-lg shadow-indigo-500/20"
-          >
-            Hablar con ventas →
-          </a>
+        <div className="flex flex-wrap gap-4">
           <Link
             href="/blueprints"
-            className="rounded-xl px-7 py-3.5 border border-white/10 hover:border-indigo-500/40 text-neutral-300 hover:text-white font-medium text-base transition"
+            className="rounded-xl px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition shadow-lg shadow-indigo-500/20"
           >
-            Explorar blueprints
+            Ver proyectos →
+          </Link>
+          <Link
+            href="/colaboracion"
+            className="rounded-xl px-6 py-3 border border-white/10 hover:border-indigo-500/40 text-neutral-300 hover:text-white font-medium transition"
+          >
+            Colaborar
           </Link>
         </div>
-
-        <p className="mt-6 text-xs text-neutral-600">Sin contratos de permanencia · Soporte en español · Implantación en días</p>
       </section>
 
-      {/* MÉTRICAS */}
+      {/* STACK */}
       <section className="border-y border-white/5 bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {METRICS.map((m) => (
-            <div key={m.label}>
-              <p className="text-4xl font-extrabold gradient-text">{m.value}</p>
-              <p className="mt-1 text-sm text-neutral-500">{m.label}</p>
-            </div>
+        <div className="mx-auto max-w-4xl px-6 py-8 flex flex-wrap gap-5 items-center justify-center">
+          {STACK.map((s) => (
+            <span key={s.label} className="flex items-center gap-2 text-sm text-neutral-500">
+              <span>{s.icon}</span>
+              <span>{s.label}</span>
+            </span>
           ))}
         </div>
       </section>
 
-      {/* SERVICIOS */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="text-center mb-14">
-          <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-3">Qué hacemos</p>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Todo lo que necesitas<br />para operar con IA
-          </h2>
-          <p className="text-neutral-400 max-w-xl mx-auto">
-            Desde un blueprint listo en minutos hasta una implantación completa a medida.
-            Sin burocracia, sin vendor lock-in.
-          </p>
-        </div>
+      {/* PROYECTOS */}
+      <section className="mx-auto max-w-4xl px-6 py-20">
+        <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-10">Proyectos</p>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {SERVICES.map((s) => (
-            <div key={s.title} className="rounded-2xl border border-white/7 bg-white/[0.02] p-6 hover:border-indigo-500/30 hover:bg-indigo-500/5 transition group">
-              <div className="text-3xl mb-4">{s.icon}</div>
-              <h3 className="text-lg font-semibold mb-2 group-hover:text-indigo-300 transition">{s.title}</h3>
-              <p className="text-sm text-neutral-500 leading-relaxed">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CASOS DE USO */}
-      <section className="border-y border-white/5 bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-6 py-24">
-          <div className="text-center mb-14">
-            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-3">Casos de uso</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-              Resultados reales, no promesas
-            </h2>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2">
-            {USECASES.map((u) => (
-              <div key={u.sector} className="gradient-border rounded-2xl p-6">
-                <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400 mb-2">{u.sector}</p>
-                <p className="text-neutral-300 leading-relaxed">{u.case}</p>
+        <div className="space-y-12">
+          {groups.map(({ cat, items }) => (
+            <div key={cat}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-600 mb-5">{cat}</p>
+              <div className="grid gap-4 md:grid-cols-2">
+                {items.map((bp) => (
+                  <Link
+                    key={bp.slug}
+                    href={bp.href}
+                    className="group rounded-2xl border border-white/7 bg-white/[0.02] p-6 hover:border-indigo-500/30 hover:bg-indigo-500/5 transition"
+                  >
+                    <h3 className="font-semibold text-white mb-2 group-hover:text-indigo-300 transition">{bp.title}</h3>
+                    <p className="text-sm text-neutral-500 leading-relaxed mb-4">{bp.summary}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {bp.tags.slice(0, 4).map((tag) => (
+                        <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-neutral-500">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* BLUEPRINTS CTA */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="text-center mb-12">
-          <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-3">Blueprints</p>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
-            Empieza hoy, no en semanas
-          </h2>
-          <p className="text-neutral-400 max-w-lg mx-auto">
-            Descarga un workflow, impórtalo en n8n y tenlo funcionando en tu entorno
-            antes de comer.
-          </p>
-        </div>
-
-        <div className="text-center">
-          <Link
-            href="/blueprints"
-            className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20 font-medium transition"
-          >
-            Ver catálogo de blueprints →
-          </Link>
-        </div>
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="rounded-3xl gradient-border p-10 md:p-16 text-center">
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-5">
-            ¿Listo para automatizar<br />tu operación?
-          </h2>
-          <p className="text-neutral-400 max-w-lg mx-auto mb-8 text-lg">
-            Cuéntanos qué proceso quieres automatizar.
-            Te proponemos una solución en 48 horas.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="mailto:ventas@mifsut.com"
-              className="rounded-xl px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base transition shadow-lg shadow-indigo-500/20"
-            >
-              Hablar con un experto →
-            </a>
-            <a
-              href="mailto:hola@mifsut.com"
-              className="rounded-xl px-8 py-4 border border-white/10 hover:border-white/20 text-neutral-300 hover:text-white font-medium transition"
-            >
-              hola@mifsut.com
-            </a>
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* ESTADO IA */}
-      <section className="mx-auto max-w-6xl px-6 pb-16 text-center">
+      <section className="border-t border-white/5 mx-auto max-w-4xl px-6 py-12 text-center">
         <AIStatusInline />
         <p className="mt-2 text-xs text-neutral-600">
-          Infraestructura IA monitorizando en tiempo real ·{" "}
-          <a className="underline underline-offset-4 hover:text-neutral-400" href="/live">Ver estado completo</a>
+          Estado de la infraestructura IA en tiempo real ·{" "}
+          <a className="underline underline-offset-4 hover:text-neutral-400" href="/live">Ver detalle</a>
         </p>
       </section>
     </main>

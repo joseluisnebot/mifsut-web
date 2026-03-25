@@ -14,25 +14,18 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-7 text-sm text-neutral-400">
-          <Link href="/soluciones" className="hover:text-white transition">Soluciones</Link>
-          <Link href="/blueprints" className="hover:text-white transition">Blueprints</Link>
+          <Link href="/blueprints" className="hover:text-white transition">Proyectos</Link>
           <Link href="/live" className="hover:text-white transition">Estado IA</Link>
-          <Link href="/empresa" className="hover:text-white transition">Empresa</Link>
+          <Link href="/sobre-mi" className="hover:text-white transition">Sobre mí</Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <a
-            href="mailto:hola@mifsut.com"
-            className="text-sm px-4 py-2 rounded-xl border border-white/10 text-neutral-300 hover:border-indigo-500/50 hover:text-white transition"
-          >
-            Contacto
-          </a>
-          <a
-            href="mailto:ventas@mifsut.com"
+          <Link
+            href="/colaboracion"
             className="text-sm px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition"
           >
-            Hablar con ventas →
-          </a>
+            Colaborar →
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -43,13 +36,12 @@ export default function Navbar() {
 
       {open && (
         <div className="md:hidden border-t border-white/5 bg-[#0f0f12] px-6 py-4 flex flex-col gap-4 text-sm">
-          <Link href="/soluciones" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Soluciones</Link>
-          <Link href="/blueprints" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Blueprints</Link>
+          <Link href="/blueprints" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Proyectos</Link>
           <Link href="/live" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Estado IA</Link>
-          <Link href="/empresa" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Empresa</Link>
-          <a href="mailto:ventas@mifsut.com" className="mt-2 text-center px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium">
-            Hablar con ventas →
-          </a>
+          <Link href="/sobre-mi" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Sobre mí</Link>
+          <Link href="/colaboracion" onClick={() => setOpen(false)} className="mt-2 text-center px-4 py-2 rounded-xl bg-indigo-600 text-white font-medium">
+            Colaborar →
+          </Link>
         </div>
       )}
     </header>
