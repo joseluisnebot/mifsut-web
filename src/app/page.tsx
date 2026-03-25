@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import AIStatusInline from "@/components/AIStatusInLine";
 import { blueprints } from "@/data/blueprints";
 
 
@@ -116,14 +115,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ESTADO IA */}
-      <section className="border-t border-white/5 mx-auto max-w-4xl px-6 py-12 text-center">
-        <AIStatusInline />
-        <p className="mt-2 text-xs text-neutral-600">
-          Estado de la infraestructura IA en tiempo real ·{" "}
-          <a className="underline underline-offset-4 hover:text-neutral-400" href="/live">Ver detalle</a>
-        </p>
-      </section>
     </main>
   );
 }
