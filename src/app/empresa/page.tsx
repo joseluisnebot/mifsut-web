@@ -1,7 +1,9 @@
-import { redirect } from "next/navigation";
-
-export const runtime = "edge";
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Empresa() {
-  redirect("/sobre-mi");
+  const router = useRouter();
+  useEffect(() => { router.replace("/sobre-mi"); }, [router]);
+  return null;
 }

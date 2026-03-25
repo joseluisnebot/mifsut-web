@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Estación meteorológica Waveshare — ESP32-S3 + LVGL | MIFSUT",

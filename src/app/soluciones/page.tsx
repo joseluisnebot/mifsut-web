@@ -1,7 +1,9 @@
-import { redirect } from "next/navigation";
-
-export const runtime = "edge";
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Soluciones() {
-  redirect("/colaboracion");
+  const router = useRouter();
+  useEffect(() => { router.replace("/colaboracion"); }, [router]);
+  return null;
 }

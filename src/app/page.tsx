@@ -3,7 +3,6 @@ import Link from "next/link";
 import AIStatusInline from "@/components/AIStatusInLine";
 import { blueprints } from "@/data/blueprints";
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "MIFSUT — Proyectos de IA, automatización e IoT",

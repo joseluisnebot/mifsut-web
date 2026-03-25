@@ -1,7 +1,6 @@
 // src/app/live/page.tsx
 import AIStatusClient from "@/components/AIStatusClient";
 
-export const runtime = "edge";
 
 export default function LivePage() {
   return (

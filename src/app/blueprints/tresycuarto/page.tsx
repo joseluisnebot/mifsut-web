@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "tresycuarto.com — Plataforma de ocio con agentes IA | MIFSUT",
