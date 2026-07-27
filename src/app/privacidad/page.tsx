@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacidad — MIFSUT",
+  title: "Privacidad",
   description: "Política de privacidad de mifsut.com: qué datos se recogen, con qué fin y qué derechos tienes.",
 };
 

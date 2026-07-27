@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Términos — MIFSUT",
+  title: "Términos",
   description: "Términos y condiciones de uso del sitio web mifsut.com.",
 };
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-  title: "Colaboración — MIFSUT",
+  title: "Colaboración",
   description: "Disponible para colaborar en proyectos de IA, automatización, IoT y plataformas web. Si tienes algo interesante, hablemos.",
 };
 

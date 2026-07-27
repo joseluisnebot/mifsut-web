@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Estado IA — MIFSUT",
+  title: "Estado IA",
   description: "Estado de los principales proveedores de IA usados en los proyectos.",
 };
 

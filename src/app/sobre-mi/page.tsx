@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-  title: "Sobre mí — Jose Luis Nebot | MIFSUT",
+  title: "Sobre mí — Jose Luis Nebot",
   description: "Soy Jose Luis Nebot. Construyo plataformas web con IA, sistemas embebidos con ESP32 y pipelines de automatización. Basado en Vinaròs.",
 };
 
