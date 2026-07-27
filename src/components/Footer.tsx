@@ -31,7 +31,11 @@ export default function Footer() {
       <div className="border-t border-white/5">
         <div className="mx-auto max-w-6xl px-6 py-5 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-600 gap-2">
           <p>© {new Date().getFullYear()} Jose Luis Nebot · MIFSUT</p>
-          <p>Next.js · Cloudflare Pages</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacidad" className="hover:text-white transition">Privacidad</Link>
+            <Link href="/terminos" className="hover:text-white transition">Términos</Link>
+            <span>Next.js · Cloudflare Pages</span>
+          </div>
         </div>
       </div>
     </footer>
