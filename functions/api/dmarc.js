@@ -7,6 +7,7 @@ const DOMINIO = /^(?=.{4,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z][a-
 const SELECTORES = [
   "google", "selector1", "selector2", "default", "k1", "k2", "s1", "s2",
   "dkim", "mail", "smtp", "zoho", "protonmail", "mandrill", "mailjet", "brevo1",
+  "cf2024-1", "k3", "s1-ionos", "s2-ionos",
 ];
 
 const PROVEEDORES = [
