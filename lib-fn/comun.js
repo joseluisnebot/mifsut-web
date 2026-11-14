@@ -6,6 +6,14 @@ export const json = (obj, status = 200, extra = {}) =>
     headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", ...extra },
   });
 
+// Comparación en tiempo constante, para claves.
+export function igual(a, b) {
+  if (typeof a !== "string" || typeof b !== "string" || a.length !== b.length) return false;
+  let d = 0;
+  for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return d === 0;
+}
+
 const HOSTS = ["mifsut.com", "www.mifsut.com", "mifsut-paginaweb.pages.dev", "localhost"];
 
 // Solo aceptamos escrituras lanzadas desde nuestras propias páginas.

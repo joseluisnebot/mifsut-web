@@ -1,12 +1,5 @@
 // GET /api/estado — recuentos del embudo para el panel interno. Requiere clave; no devuelve correos.
-import { json } from "../../lib-fn/comun.js";
-
-function igual(a, b) {
-  if (typeof a !== "string" || typeof b !== "string" || a.length !== b.length) return false;
-  let d = 0;
-  for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return d === 0;
-}
+import { json, igual } from "../../lib-fn/comun.js";
 
 export const onRequestGet = async ({ request, env }) => {
   if (!env.ESTADO_CLAVE || !igual(request.headers.get("x-clave") ?? "", env.ESTADO_CLAVE))

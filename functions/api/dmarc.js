@@ -1,5 +1,5 @@
 // GET /api/dmarc?dominio=ejemplo.com — revisa SPF, DKIM y DMARC de un dominio por DNS público.
-import { json, bajoTope } from "../../lib-fn/comun.js";
+import { json, bajoTope, igual } from "../../lib-fn/comun.js";
 
 const DOMINIO = /^(?=.{4,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z][a-z0-9-]{1,62}$/;
 
@@ -193,7 +193,9 @@ export const onRequestGet = async ({ request, env }) => {
   // Un «+all» hace pasar el SPF a cualquiera, y con eso también el DMARC.
   if (nivel === "protegido" && spf.estado === "abierto-total") nivel = "parcial";
 
-  if (env.DB && (await bajoTope(env, "usos", 5000)))
+  // La autocomprobación del panel interno (lleva la clave) no cuenta como uso.
+  const interna = Boolean(env.ESTADO_CLAVE) && igual(request.headers.get("x-clave") ?? "", env.ESTADO_CLAVE);
+  if (!interna && env.DB && (await bajoTope(env, "usos", 5000)))
     await env.DB.prepare("INSERT INTO usos (herramienta, resultado, detalle) VALUES ('dmarc', ?, ?)")
       .bind(nivel, JSON.stringify({ spf: spf.estado, dkim: selectores.length > 0, proveedor }))
       .run();

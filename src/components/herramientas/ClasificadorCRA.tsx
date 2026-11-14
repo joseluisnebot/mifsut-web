@@ -83,6 +83,7 @@ type Resultado = { clase: Clase; motivo?: string; papel?: Papel; tamano?: Tamano
 function registra(r: Resultado) {
   fetch("/api/uso", {
     method: "POST",
+    keepalive: true,
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ herramienta: "cra", resultado: r.clase, papel: r.papel ?? "", tamano: r.tamano ?? "" }),
   }).catch(() => {});
