@@ -9,3 +9,9 @@ pages_build_output_dir = ".vercel/output/static"
 # Variables (opcionales; también puedes ponerlas en el panel de Pages)
 [vars]
 NODE_ENV = "production"
+
+# Base de datos de las herramientas (/cra, /dmarc): usos anónimos y reservas
+[[d1_databases]]
+binding = "DB"
+database_name = "mifsut-empresa"
+database_id = "170acd17-a2ce-4b54-87f1-1983217ff7a9"

@@ -9,6 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/blueprints/",
     "/sobre-mi/",
     "/colaboracion/",
+    "/cra/",
+    "/dmarc/",
     "/live/",
     "/privacidad/",
     "/terminos/",

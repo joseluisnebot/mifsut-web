@@ -14,6 +14,8 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-7 text-sm text-neutral-400">
+          <Link href="/cra" className="hover:text-white transition">Clasificador CRA</Link>
+          <Link href="/dmarc" className="hover:text-white transition">Comprobador DMARC</Link>
           <Link href="/blueprints" className="hover:text-white transition">Proyectos</Link>
           <Link href="/live" className="hover:text-white transition">Estado IA</Link>
           <Link href="/sobre-mi" className="hover:text-white transition">Sobre mí</Link>
@@ -36,6 +38,8 @@ export default function Navbar() {
 
       {open && (
         <div className="md:hidden border-t border-white/5 bg-[#0f0f12] px-6 py-4 flex flex-col gap-4 text-sm">
+          <Link href="/cra" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Clasificador CRA</Link>
+          <Link href="/dmarc" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Comprobador DMARC</Link>
           <Link href="/blueprints" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Proyectos</Link>
           <Link href="/live" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Estado IA</Link>
           <Link href="/sobre-mi" onClick={() => setOpen(false)} className="text-neutral-300 hover:text-white">Sobre mí</Link>

@@ -23,8 +23,11 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-4">Contacto</p>
-          <p className="text-sm text-neutral-400">hola@mifsut.com</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-4">Herramientas gratuitas</p>
+          <ul className="space-y-2 text-sm text-neutral-400">
+            <li><Link href="/cra" className="hover:text-white transition">Clasificador CRA</Link></li>
+            <li><Link href="/dmarc" className="hover:text-white transition">Comprobador SPF, DKIM y DMARC</Link></li>
+          </ul>
         </div>
       </div>
 
