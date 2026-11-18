@@ -58,6 +58,13 @@ export default function CRA() {
           ))}
         </div>
         <p className="mt-8 text-sm text-neutral-500">
+          Guía relacionada:{" "}
+          <a href="/guias/cra-firmware-esp32/" className="underline hover:text-white">
+            CRA para firmware ESP32 y PLC
+          </a>
+          .
+        </p>
+        <p className="mt-4 text-sm text-neutral-500">
           Texto oficial:{" "}
           <a
             href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32024R2847"

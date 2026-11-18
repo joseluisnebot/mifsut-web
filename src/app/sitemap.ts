@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/colaboracion/",
     "/cra/",
     "/dmarc/",
+    "/guias/cra-firmware-esp32/",
     "/live/",
     "/privacidad/",
     "/terminos/",
