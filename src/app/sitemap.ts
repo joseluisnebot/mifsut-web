@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/cra/",
     "/dmarc/",
     "/guias/cra-firmware-esp32/",
+    "/guias/laboratorio-ot-docker/",
     "/live/",
     "/privacidad/",
     "/terminos/",
