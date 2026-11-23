@@ -61,6 +61,10 @@ export default function CRA() {
           Guía relacionada:{" "}
           <a href="/guias/cra-firmware-esp32/" className="underline hover:text-white">
             CRA para firmware ESP32 y PLC
+          </a>{" "}
+          ·{" "}
+          <a href="/guias/secure-cra-ayuda/" className="underline hover:text-white">
+            Ayuda SECURE de hasta 30.000 €
           </a>
           .
         </p>
